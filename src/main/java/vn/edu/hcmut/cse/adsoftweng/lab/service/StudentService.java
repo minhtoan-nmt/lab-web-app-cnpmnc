@@ -18,6 +18,16 @@ public class StudentService {
 
     public Student getById(String id) {
         return repository.findById(id).orElse(null);
+    }
+
+    public List<Student> searchByName(String keyword) {
+        // TODO Auto-generated method stub
+        return repository.findByName(keyword);
+    }
+
+    public List<Student> searchByKeyword(String keyword) {
+        // TODO Auto-generated method stub
+        return repository.findByKeywords('%' + keyword + '%');
     } 
 
 }
