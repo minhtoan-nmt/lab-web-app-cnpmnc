@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.hcmut.cse.adsoftweng.lab.entity.Student;
 import vn.edu.hcmut.cse.adsoftweng.lab.service.StudentService;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("/api/students")
