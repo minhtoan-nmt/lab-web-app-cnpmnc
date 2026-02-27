@@ -3,6 +3,7 @@ package vn.edu.hcmut.cse.adsoftweng.lab.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,12 @@ public class StudentController {
     @GetMapping("/{id}")
     public Student getMethodName(@PathVariable String id) {
         return service.getById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable String id) {
+        service.deleteStudent(id);
+        return "OK Bro";
     }
     
 }

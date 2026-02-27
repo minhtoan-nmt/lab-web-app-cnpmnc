@@ -29,17 +29,19 @@
                     <th>Tuoi</th>
                 </tr>
             </thead>
+            <!-- <a href="student_details.html">ID Mau</a> -->
             <tbody>
                 <!-- Cu phap Thymeleaf: Duyet qua danh sach "dsSinhVien" -->
                 <!-- th:each="bien_tam : ${key_trong_model}" -->
-                <tr th:each="student : ${dsSinhVien}" th:classappend="${student.age < 18} ? 'red-text' : ''">
-                    <td th:text="${student.id}">ID Mau</td>
+                <tr th:each="student : ${dsSinhVien}" th:classappend="${student.age < 18} ? 'red-text' : ''">                    
+                    <td><a th:href="@{/students/{id}(id=${student.id})}" th:text="${student.id}">ID Mau</a></td>
                     <td th:text="${student.name}">Ten Mau</td>
                     <td th:text="${student.email}">Email Mau</td>
                     <td th:text="${student.age}">0</td>
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/students/student_update}"><button>Thêm sinh viên</button></a>
     </body>
 </html>
 

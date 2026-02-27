@@ -28,6 +28,20 @@ public class StudentService {
     public List<Student> searchByKeyword(String keyword) {
         // TODO Auto-generated method stub
         return repository.findByKeywords('%' + keyword + '%');
+    }
+
+    public boolean saveStudent(Student student) {
+        // TODO Auto-generated method stub
+        if (repository.existsById(student.getId())) {
+            return false;
+        }
+        repository.save(student);
+        return true;
+    }
+
+    public void deleteStudent(String id) {
+        // TODO Auto-generated method stub
+        repository.deleteById(id);
     } 
 
 }
