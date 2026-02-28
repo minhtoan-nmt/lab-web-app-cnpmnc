@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.edu.hcmut.cse.adsoftweng.lab.entity.Student;
+import vn.edu.hcmut.cse.adsoftweng.lab.error.ErrorMessage;
 import vn.edu.hcmut.cse.adsoftweng.lab.service.StudentService;
+import vn.edu.hcmut.cse.adsoftweng.lab.validator.StudentInputValidator;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 
+
 @Controller
 @RequestMapping("/students")
 public class StudentWebController {
     @Autowired
     private StudentService service;
+    @Autowired
+    private StudentInputValidator validator;
 
     @GetMapping("")
     public String getAllStudents(@RequestParam(required = false) String keyword, Model model) {
@@ -60,16 +65,33 @@ public class StudentWebController {
     }
 
     @PostMapping("/student_update")
-    public String updateStudent(@ModelAttribute("sinhVien") Student student) {
+    public String updateStudent(@ModelAttribute("sinhVien") Student student, Model model) {
         //TODO: process POST request
-        if (service.saveStudent(student))
-            return "redirect:/students";
-        return "update_student_failed";
+        String valid = validator.validate(student, model);
+        if (valid != ErrorMessage.NO_ERROR) {
+            return valid;
+        }
+        service.updateStudent(student);
+        return "redirect:/students";
     }
     
-    // @DeleteMapping("/student_delete/{id}")
-    // public String deleteStudent(@PathVariable String id) {
-    //     service.deleteStudent(id);
-    //     return "redirect:/students";
-    // }
+    @GetMapping("/student_creation")
+    public String deleteStudent(Model model) {
+        return "student_creation";
+    }
+
+    @PostMapping("/student_creation")
+    public String addNewStudent(@ModelAttribute("sinhVien") Student student, Model model) {
+        //TODO: process POST request
+        String valid = validator.validate(student, model);
+        if (valid != ErrorMessage.NO_ERROR) {
+            return valid;
+        }
+        if (service.saveStudent(student))
+            return "redirect:/students";
+        else {
+            model.addAttribute("errMsg", ErrorMessage.STUDENT_ID_EXISTED);
+        }
+        return "update_student_failed";
+    }
 }

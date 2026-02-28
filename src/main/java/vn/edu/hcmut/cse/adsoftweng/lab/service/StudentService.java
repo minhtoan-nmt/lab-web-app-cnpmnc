@@ -42,6 +42,11 @@ public class StudentService {
     public void deleteStudent(String id) {
         // TODO Auto-generated method stub
         repository.deleteById(id);
+    }
+
+    public void updateStudent(Student student) {
+        // TODO Auto-generated method stub
+        repository.save(student);
     } 
 
 }
